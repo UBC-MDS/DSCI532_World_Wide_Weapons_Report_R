@@ -29,8 +29,8 @@ countryDropdown <- dccDropdown(
   # map/lapply can be used as a shortcut instead of writing the whole list
   # especially useful if you wanted to filter by country!
   options = map(
-    levels(full_data$country), function(x){
-      list('label'='Country', value=x)
+    unique(full_data$country), function(x){
+      list(label=x, value=x)
     }),
   value = 'Canada' 
 )
@@ -40,8 +40,8 @@ statisticDropdown <- dccDropdown(
   # map/lapply can be used as a shortcut instead of writing the whole list
   # especially useful if you wanted to filter by country!
   options = map(
-    levels(full_data$direction), function(x){
-      list('label'='Statistic', value=x)
+    unique(full_data$direction), function(x){
+      list(label=x, value=x)
     }),
   value = 'Import'
 )
