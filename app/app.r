@@ -46,6 +46,14 @@ statisticDropdown <- dccDropdown(
   value = 'Import'
 )
 
+yearSlider <- dccSlider(
+  id = "year_value",
+  min = 1988,
+  max = 2018,
+  marks = list(as.character(unique(full_data$year))),
+  value = 2018
+)
+
 # Uses default parameters such as all_continents for initial graph
 make_GDP_percent_graph <- function(country_shown = "Canada",
                        statistic = "Import"){
@@ -65,7 +73,8 @@ make_GDP_percent_graph <- function(country_shown = "Canada",
     geom_bar(stat = "identity", colour = 'black', fill = 'orange') +
     ylab('% of GDP') +
     xlab('Year') +
-    ggtitle(paste0(country_shown, " Weapons ", statistic, " share in GDP"))
+    ggtitle(paste0(country_shown, " Weapons ", statistic, " share in GDP")) +
+    theme_classic()
     
   p1
   
@@ -89,11 +98,38 @@ make_USD_total_graph <- function(country_shown = "Canada",
     geom_area(fill = 'orange', colour = 'black') +
     ylab('USD Value') +
     xlab('Year') +
-    ggtitle(paste0(country_shown, " Weapons ", statistic, " value in USD"))
+    ggtitle(paste0(country_shown, " Weapons ", statistic, " value in USD")) +
+    theme_classic()
   
   p2
 
   ggplotly(p2)
+}
+
+make_gdp_perc_year_graph <- function(statistic = "Import",
+                                year_val = 2018) {
+  
+  # wrangling for this graph
+  data <- full_data %>% 
+    mutate(perc_gdp = (trade_usd/gdp)*100) %>% 
+    arrange(desc(perc_gdp)) %>% 
+    filter(year == year_val,
+           direction == statistic) %>%
+    head(16)
+  
+  # make the plot
+  p3 <- ggplot(data, aes(x = reorder(country, -perc_gdp), y = perc_gdp)) +
+    geom_bar(stat = 'identity', colour = 'black', fill = 'orange') +
+    theme_classic() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    labs(x = 'Country', 
+         y = 'Percentage of GDP') +
+    ggtitle(paste0( statistic, "s as a Percentage of GDP in ", year_val))
+    
+  
+  p3
+  
+  ggplotly(p3)
 }
 
 # Now we define the graph as a dash component using generated figure
@@ -107,14 +143,23 @@ graph_USD_cont <- dccGraph(
   figure=make_USD_total_graph() # gets initial data using argument defaults
 )
 
+graph_perc_gdp <- dccGraph(
+  id = 'Perc_GDP_graph',
+  figure=make_gdp_perc_year_graph() # gets initial data using argument defaults
+)
+
 app$layout(
   htmlDiv(
     list(
       htmlH1('World Wide Arms and Ammunition Movement and GDP Effects'),
       htmlH3("This app is designed to explore how the movement of weapons globally has changed over the last 30 years, and how imports and exports of arms and ammunition relate to a country's GDP."),
-      #yearMarks,
-      countryDropdown,
+      htmlP("Select a year to view cross-sectional data:"),
+      yearSlider,
+      htmlP("Select a statistic:"),
       statisticDropdown,
+      graph_perc_gdp,
+      htmlP("Select a country to view time-series data:"),
+      countryDropdown,
       graph_gdp_cont,
       graph_USD_cont,
       htmlDiv(), #spacer
@@ -143,6 +188,26 @@ app$callback(
   #this translates your list of params into function arguments
   function(country_value, statistic_value) {
     make_USD_total_graph(country_value, statistic_value)
+  })
+
+app$callback(
+  #update figure of gdp-perc-year graph
+  output=list(id = 'Perc_GDP_graph', property='figure'),
+  params=list(input(id = 'statistic', property='value'),
+              input(id = 'year_value', property='value')),
+  #this translates your list of params into function arguments
+  function(statistic_value, year_value) {
+    make_gdp_perc_year_graph(statistic_value, year_value)
+  })
+
+app$callback(
+  #update figure of gdp-perc-year graph
+  output=list(id = 'Perc_GDP_graph', property='figure'),
+  params=list(input(id = 'statistic', property='value'),
+              input(id = 'year_value', property='value')),
+  #this translates your list of params into function arguments
+  function(statistic_value, year_value) {
+    make_gdp_perc_year_graph(statistic_value, year_value)
   })
 
 app$run_server()
