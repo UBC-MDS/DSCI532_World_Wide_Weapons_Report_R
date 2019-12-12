@@ -1,11 +1,14 @@
 library(dash)
 library(dashCoreComponents)
 library(dashHtmlComponents)
-library(tidyverse)
+# library(tidyverse)
+library(readr)
+library(dplyr)
+library(purrr)
+library(stringr)
 library(plotly)
-library(gapminder)
-library(repr)
-library(gridExtra)
+library("rnaturalearth")
+library("rnaturalearthdata")
 
 # We'll replace our styles with an external stylesheet 
 # for simplicity
