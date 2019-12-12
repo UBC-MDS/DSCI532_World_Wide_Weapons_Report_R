@@ -1,6 +1,8 @@
 libcurl4-openssl-dev
 libxml2-dev
-libv8-3.14-dev
 libv8-dev
 libjq-dev
+libudunits2-dev
+protobuf
 protobuf-compiler
+libjq
