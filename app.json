@@ -5,8 +5,8 @@
     "heroku",
     "R deployment",
     "Dash R"
-],
-"buildpacks": [
+  ],
+  "buildpacks": [
     {
       "url": "https://github.com/virtualstaticvoid/heroku-buildpack-r.git#heroku-16"
     }

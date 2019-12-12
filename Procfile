@@ -1,1 +1,1 @@
-web: R -f app/app/app.R
+web: R -f app/app/app.r
