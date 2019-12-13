@@ -17,6 +17,7 @@ options(repos=r)
 #install.packages("sf")
 #install.packages("sp")
 install.packages("rnaturalearth", configure.args = "--with-udunits2-lib=/app/.apt/usr/lib/x86_64-linux-gnu")
+install.packages("rnaturalearth", configure.args = "--with-udunits2-lib=/usr/lib/x86_64-linux-gnu")
 install.packages("rnaturalearthdata")
 
 # install.packages("https://cran.r-project.org/src/contrib/jsonlite_1.6.tar.gz", type="source", repos=NULL)
