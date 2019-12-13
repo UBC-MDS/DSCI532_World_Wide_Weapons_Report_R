@@ -1,16 +1,13 @@
 library(dash)
 library(dashCoreComponents)
 library(dashHtmlComponents)
-# library(tidyverse)
-library(readr)
-library(dplyr)
-library(purrr)
-library(stringr)
+library(tidyverse)
 library(plotly)
-library("rnaturalearth")
-library("rnaturalearthdata")
+library(gapminder)
+library(repr)
+library(gridExtra)
 
-# We'll replace our styles with an external stylesheet 
+# We'll replace our styles with an external stylesheet
 # for simplicity
 app <- Dash$new(external_stylesheets = "https://codepen.io/chriddyp/pen/bWLwgP.css")
 
@@ -35,7 +32,7 @@ countryDropdown <- dccDropdown(
     unique(full_data$country), function(x){
       list(label=x, value=x)
     }),
-  value = 'Canada' 
+  value = 'Canada'
 )
 
 statisticDropdown <- dccDropdown(
@@ -61,13 +58,13 @@ yearSlider <- dccSlider(
 make_GDP_percent_graph <- function(country_shown = "Canada",
                        statistic = "Import"){
 
-  
+
   #filter our data based on the stat/country selections
   data <- full_data %>%
-    mutate('gdp_percent' = trade_usd/gdp) %>% 
-    filter(direction == statistic) %>% 
-    filter(country == country_shown) 
- 
+    mutate('gdp_percent' = trade_usd/gdp) %>%
+    filter(direction == statistic) %>%
+    filter(country == country_shown)
+
   # make the plot!
   # on converting yaxis string to col reference (quosure) by `!!sym()`
   # see: https://github.com/r-lib/rlang/issues/116
@@ -78,21 +75,21 @@ make_GDP_percent_graph <- function(country_shown = "Canada",
     xlab('Year') +
     ggtitle(paste0(country_shown, " Weapons ", statistic, " share in GDP")) +
     theme_classic()
-    
+
   p1
-  
+
   ggplotly(p1)
 }
 
 make_USD_total_graph <- function(country_shown = "Canada",
                        statistic = "Import"){
 
-  
+
   #filter our data based on the stat/country selections
   data <- full_data %>%
-    filter(direction == statistic) %>% 
-    filter(country == country_shown) 
- 
+    filter(direction == statistic) %>%
+    filter(country == country_shown)
+
   # make the plot!
   # on converting yaxis string to col reference (quosure) by `!!sym()`
   # see: https://github.com/r-lib/rlang/issues/116
@@ -103,7 +100,7 @@ make_USD_total_graph <- function(country_shown = "Canada",
     xlab('Year') +
     ggtitle(paste0(country_shown, " Weapons ", statistic, " value in USD")) +
     theme_classic()
-  
+
   p2
 
   ggplotly(p2)
@@ -111,27 +108,27 @@ make_USD_total_graph <- function(country_shown = "Canada",
 
 make_gdp_perc_year_graph <- function(statistic = "Import",
                                 year_val = 2018) {
-  
+
   # wrangling for this graph
-  data <- full_data %>% 
-    mutate(perc_gdp = (trade_usd/gdp)*100) %>% 
-    arrange(desc(perc_gdp)) %>% 
+  data <- full_data %>%
+    mutate(perc_gdp = (trade_usd/gdp)*100) %>%
+    arrange(desc(perc_gdp)) %>%
     filter(year == year_val,
            direction == statistic) %>%
     head(16)
-  
+
   # make the plot
   p3 <- ggplot(data, aes(x = reorder(country, -perc_gdp), y = perc_gdp)) +
     geom_bar(stat = 'identity', colour = 'black', fill = 'orange') +
     theme_classic() +
     theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-    labs(x = 'Country', 
+    labs(x = 'Country',
          y = 'Percentage of GDP') +
     ggtitle(paste0( statistic, "s as a Percentage of GDP in ", year_val))
-    
-  
+
+
   p3
-  
+
   ggplotly(p3)
 }
 
@@ -213,4 +210,5 @@ app$callback(
     make_gdp_perc_year_graph(statistic_value, year_value)
   })
 
-app$run_server(host = "0.0.0.0", port = Sys.getenv('PORT', 8050))
+app$run_server()
+
