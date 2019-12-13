@@ -1,8 +1,9 @@
+:repo:deb http://ppa.launchpad.net/opencpu/jq/ubuntu xenial main universe
 libcurl4-openssl-dev
 libxml2-dev
 libv8-dev
 libjq-dev
+libjq
 libudunits2-dev
 protobuf
 protobuf-compiler
-libjq
