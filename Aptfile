@@ -1,7 +1,9 @@
 http://archive.ubuntu.com/ubuntu/pool/main/t/texinfo/install-info_6.1.0.dfsg.1-5_i386.deb
 http://archive.ubuntu.com/ubuntu/pool/universe/u/udunits/libudunits2-0_2.2.20-1_i386.deb
 http://archive.ubuntu.com/ubuntu/pool/universe/u/udunits/libudunits2-dev_2.2.20-1_i386.deb
-:repo:deb http://ppa.launchpad.net/opencpu/jq/ubuntu xenial main universe
+http://archive.ubuntu.com/ubuntu/pool/universe/g/gdal/libgdal-dev_1.11.3+dfsg-3build2_i386.deb
+:repo:deb [trusted=yes] http://ppa.launchpad.net/opencpu/jq/ubuntu xenial main universe
+libgdal-dev
 libcurl4-openssl-dev
 libxml2-dev
 libv8-dev

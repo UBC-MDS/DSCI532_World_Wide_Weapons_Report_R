@@ -9,14 +9,14 @@ options(repos=r)
 # ======================================================================
 
 # packages go here
-install.packages("remotes")
+# install.packages("remotes")
 
 # installs Rcpp, rlang, BH
-install.packages("later")
+# install.packages("later")
 
-install.packages("sf")
-install.packages("sp")
-install.packages("rnaturalearth")
+#install.packages("sf")
+#install.packages("sp")
+install.packages("rnaturalearth", configure.args = "--with-udunits2-lib=/app/.apt/usr/lib/x86_64-linux-gnu")
 install.packages("rnaturalearthdata")
 
 # install.packages("https://cran.r-project.org/src/contrib/jsonlite_1.6.tar.gz", type="source", repos=NULL)
