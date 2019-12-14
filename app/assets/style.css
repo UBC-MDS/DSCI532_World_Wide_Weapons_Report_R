@@ -1,0 +1,77 @@
+body, html {
+    padding: 0px 0px;
+    margin: 0px 0px;
+    font-family: 'Open Sans', sans-serif;
+    color: #555;
+}
+
+h1 {
+    margin: 0px 0px;
+    padding: 20px 0px;
+    color: white;
+    background: cadetblue;
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: initial;
+    font-weight: 600;
+}
+
+.top-container .left-col {
+    width: 200px;
+    float: left;
+}
+
+.top-container .right-col {
+    overflow: hidden;
+    padding-bottom: 20px;
+}
+
+.top-container .right-col #year-slider {
+    height: 30px;
+    padding: 15px 20px;
+    margin-top: -30px
+}
+
+.top-container .right-col #world-chart {
+    margin: 0px 10px;
+}
+
+.bottom-container {
+
+}
+
+.bottom-container .col {
+  width: 50%;
+  display: inline-block;
+}
+
+.inner-container {
+    width: 1024px;
+    margin: 0px auto;
+}
+
+#world_map {
+  margin-bottom: -20px;
+}
+
+#year_value {
+  margin: 0px 10px;
+}
+
+#map_options {
+  margin: 20px 0px;
+}
+
+#map_options label {
+  margin-bottom: 5px;
+      display: block;
+}
+
+.rc-slider-handle {
+  outline: none;
+}
