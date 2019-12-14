@@ -101,7 +101,7 @@ make_world_map_graph <- function(year = 2018, statistic = 'Import', map_options 
     geom_sf(aes(fill = !!stat_column),
             color = "white",
             size = 0.1) +
-    scale_fill_gradient(low = 'orange',
+    scale_fill_gradient(low = '#f4d065',
                         high = 'brown',
                         label = label_formatter) +
     labs(fill = stat_title) +
@@ -137,7 +137,8 @@ make_GDP_percent_graph <- function(country_shown = "Canada",
     xlab('Year') +
     geom_vline(xintercept = year, color = 'red') +
     ggtitle(paste0(country_shown, " Weapons ", statistic, " share in GDP")) +
-    theme_classic()
+    theme_classic() +
+    theme(panel.grid.major.y = element_line(colour = "#dddddd"))
 
   p1
 
@@ -165,7 +166,8 @@ make_USD_total_graph <- function(country_shown = "Canada",
     xlab('Year') +
     geom_vline(xintercept = year, color = 'red') +
     ggtitle(paste0(country_shown, " Weapons ", statistic, " value in USD")) +
-    theme_classic()
+    theme_classic() +
+    theme(panel.grid.major.y = element_line(colour = "#dddddd"))
 
   p2
 
@@ -185,10 +187,11 @@ make_gdp_perc_year_graph <- function(statistic = "Import",
 
   # make the plot
   p3 <- ggplot(data, aes(x = reorder(country, -perc_gdp), y = perc_gdp, fill = perc_gdp)) +
-    geom_bar(stat = 'identity', colour = 'black', size = 0.25) +
-    scale_fill_gradient(low = 'orange', high = 'brown', guide = FALSE) +
+    geom_bar(stat = 'identity', colour = 'white', size = 0.25) +
+    scale_fill_gradient(low = '#f4d065', high = 'brown', guide = FALSE) +
     theme_classic() +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+          panel.grid.major.y = element_line(colour = "#dddddd")) +
     labs(x = 'Country',
          y = 'Percentage of GDP') +
     ggtitle(paste0(statistic, "s as a Percentage of GDP in ", year_val))
