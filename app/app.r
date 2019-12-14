@@ -252,7 +252,7 @@ app$layout(
                      htmlDiv(list(graph_USD_cont), className = 'col')), className = 'bottom-container'),
 
         htmlDiv(), #spacer
-        dccMarkdown("[Data Source](https://cran.r-project.org/web/packages/gapminder/README.html)")
+        dccMarkdown("[Data Source 1](http://data.un.org/Data.aspx?d=ComTrade&f=_l1Code%3a93), [Data Source 2](https://data.worldbank.org/indicator/NY.GDP.MKTP.CD)")
       ), className = 'inner-container')
     ), className = 'outer-container'
   )
